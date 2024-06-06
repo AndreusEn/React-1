@@ -1,4 +1,5 @@
 import './App.css';
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Formulario from './Components/Formulario/Formulario';
 import MiOrg from './Components/MiOrg/MiOrg';
@@ -90,16 +91,25 @@ function App() {
 // si mostrarForm es igual a true, se muestra formulario en caso contrario dame un div 
 
   return (
-    
-    <div>
+
+    <Router>
+          <div>
       <Header/>
 
-      {mostrarForm ===true? <Formulario 
-      equipo={equipo.map((equipo)=> equipo.titulo)} 
-      RegistrarCol={RegistrarCol} nuevosEquipos={nuevosEquipos} />
-       : <></>}
+      <Routes>
+        
+        <Route path='/' element={<MiOrg cambiarEstado={cambiarEstado}></MiOrg>} />
+
+        <Route path='/Agregar' 
+        
+        element={mostrarForm ===true ? 
+        <Formulario equipo={equipo.map((equipo)=> equipo.titulo)} 
+        RegistrarCol={RegistrarCol} nuevosEquipos={nuevosEquipos} />
+        : <></>} />
+
+       <Route path='/*' element={<h1>NO EXISTE MMHUEVO</h1>} />
       
-      <MiOrg cambiarEstado={cambiarEstado}></MiOrg>
+      </Routes>    
 
       {   
         equipo.map( (equipo) =>  <Equipo datos={equipo} key={equipo.titulo} 
@@ -109,10 +119,12 @@ function App() {
         Like={Like}
         />
         )
-      }
-
+      } 
+      
       <FooterCom/>
-    </div>
+      </div>
+    </Router>
+
   );
 }
 
